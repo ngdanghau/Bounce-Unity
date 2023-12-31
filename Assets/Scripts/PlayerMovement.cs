@@ -4,10 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private float speed;
-    private float defaultSpeed = 7f;
-    private float jumpingPower = 16.5f;
-    private float jumpingPowerBig = 17f;
-    private float defaultJumpOffset = 0.5f;
+    private float defaultSpeed;
+    private float jumpingPower;
+    private float jumpingPowerBig;
+    private float defaultJumpOffset;
 
     internal Rigidbody2D rb;
     internal BallController playerController;
@@ -31,7 +31,12 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         playerController = gameObject.GetComponent<BallController>();
-        speed = defaultSpeed;
+        speed = GameManager.instance.defaultSpeed;
+
+        defaultSpeed = GameManager.instance.defaultSpeed;
+        jumpingPower = GameManager.instance.jumpingPower;
+        jumpingPowerBig = GameManager.instance.jumpingPowerBig;
+        defaultJumpOffset = GameManager.instance.defaultJumpOffset;
     }
 
     public void ChangePowerJump(bool value)
@@ -111,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
+
 
     private void FixedUpdate()
     {

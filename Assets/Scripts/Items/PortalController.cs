@@ -5,16 +5,13 @@ using UnityEngine.SceneManagement;
 public class PortalController : MonoBehaviour
 {
     GameObject nextMenu;
-    public int scoreEarn = 5000;
 
     BallController playerController;
-    AudioManager audioManager;
     Animator animator;
 
     private void Awake()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<BallController>();
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         animator = GetComponent<Animator>();
 
         nextMenu = playerController.nextMenuCanvas;
@@ -32,8 +29,8 @@ public class PortalController : MonoBehaviour
             return;
         }
 
-        audioManager.PlaySFX(audioManager.pickupItem);
-        playerController.AddScore(scoreEarn);
+        AudioManager.instance.PlaySFX(AudioManager.instance.pickupItem);
+        playerController.AddScore(GameManager.instance.scorePortal);
         
 
         nextMenu.GetComponentInChildren<TextMeshProUGUI>().text = "test";

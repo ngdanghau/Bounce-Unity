@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class PowerSpeedController : MonoBehaviour
 {
-    private const float defaultTime = 11f;
     private float remainingTime;
 
     PlayerMovement playerMovement;
@@ -35,7 +34,7 @@ public class PowerSpeedController : MonoBehaviour
         }
 
         int seconds = Mathf.FloorToInt(remainingTime % 60);
-        timerImage.fillAmount = seconds / defaultTime;
+        timerImage.fillAmount = seconds / GameManager.instance.timeForPowerUp;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -45,7 +44,7 @@ public class PowerSpeedController : MonoBehaviour
         timerImage.fillAmount = 1;
 
         // check collision, set default time
-        remainingTime = defaultTime;
+        remainingTime = GameManager.instance.timeForPowerUp;
 
         // change state for player
         playerMovement.ChangePowerSpeed(true);

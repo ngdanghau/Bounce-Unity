@@ -14,6 +14,20 @@ public class AudioManager : MonoBehaviour
     public AudioClip characterPop;
     public AudioClip pickupObstacle;
 
+    public static AudioManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         // set background (optinal)

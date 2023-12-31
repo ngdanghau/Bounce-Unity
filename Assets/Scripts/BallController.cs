@@ -2,12 +2,10 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallController : MonoBehaviour
 {
-    private TextMeshProUGUI scoreText;
-    private TextMeshProUGUI lifeText;
-
     public int numLives = 3;
     public int numRings = 0;
 
@@ -17,21 +15,22 @@ public class BallController : MonoBehaviour
     public BallState ballState = BallState.Small;
     private BallState ballStateSaved;
 
-    [SerializeField] private GameObject FailedPanel;
 
+    private TextMeshProUGUI scoreText;
+    private TextMeshProUGUI lifeText;
+
+    public GameObject FailedPanel;
     public GameObject timerCanvas;
     public GameObject nextMenuCanvas;
+    public GameObject RingImages;
     private Animator anim;
 
     Vector2 checkpointPos;
-    AudioManager audioManager;
 
-    private bool isCheat = false;
-    public bool isInvincible = false;
+    private PlayerMovement playerMovement;
 
     private void Awake()
     {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         totalNumRings = GameObject.FindGameObjectsWithTag("Ring").Length;
         anim = GetComponent<Animator>();
 
@@ -40,6 +39,8 @@ public class BallController : MonoBehaviour
 
         ballStateSaved = ballState;
         anim.SetBool("IsBigBall", ballState == BallState.Big);
+
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     public void EnlargeBall()
@@ -89,7 +90,7 @@ public class BallController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Thorn") && !isInvincible)
+        if (collision.CompareTag("Thorn"))
         {
             bool IsDie = anim.GetBool("IsDie");
             if (IsDie)
@@ -105,6 +106,16 @@ public class BallController : MonoBehaviour
     public void ChangeRing(int value)
     {
         numRings += value;
+
+        //GameObject ring = new("GlobalRing");
+        //Image newImageComponent = RingImages.AddComponent<Image>();
+
+        //newImageComponent.sprite = GameManager.instance.gbarRing;
+        //newImageComponent.rectTransform.position = GameManager.instance.position;
+        //newImageComponent.rectTransform.sizeDelta = GameManager.instance.size;
+
+        //ring.transform.parent = RingImages.transform;
+
     }
 
     void StartGame()
@@ -112,16 +123,20 @@ public class BallController : MonoBehaviour
         anim.SetBool("IsDie", false);
         Time.timeScale = 1;
         transform.position = checkpointPos;
-        ballState = ballStateSaved;
+        ballState = ballStateSaved; 
         anim.SetBool("IsBigBall", ballState == BallState.Big);
     }
     
     IEnumerator Die()
     {
+        playerMovement.ChangePowerGravity(false);
+        playerMovement.ChangePowerJump(false);
+        playerMovement.ChangePowerSpeed(false);
+
         anim.SetBool("IsDie", true);
         gameObject.transform.rotation = Quaternion.identity;
 
-        audioManager.PlaySFX(audioManager.characterPop);
+        AudioManager.instance.PlaySFX(AudioManager.instance.characterPop);
         Time.timeScale = 0;
 
         yield return new WaitForSecondsRealtime(0.50f);

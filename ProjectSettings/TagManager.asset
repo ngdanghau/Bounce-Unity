@@ -14,8 +14,6 @@ TagManager:
   - LifeText
   - ScoreText
   - Map
-  - JumpPad
-  - FailedPanel
   - LevelCompleteText
   - Timer
   - Rubber

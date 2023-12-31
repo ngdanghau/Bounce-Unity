@@ -3,7 +3,6 @@ using UnityEngine;
 public class RingBigController : MonoBehaviour
 {
     BallController playerController;
-    AudioManager audioManager;
 
     SpriteRenderer[] spriteRenderers;
     public Sprite ringBigUncatchTop, ringBigCatchedTop, ringBigUncatchBottom, ringBigCatchedBottom;
@@ -12,7 +11,6 @@ public class RingBigController : MonoBehaviour
     private void Awake()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<BallController>();
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         colls = GetComponents<EdgeCollider2D>();
     }
@@ -24,12 +22,12 @@ public class RingBigController : MonoBehaviour
             return;
         }
 
-        audioManager.PlaySFX(audioManager.pickupObstacle);
+        AudioManager.instance.PlaySFX(AudioManager.instance.pickupObstacle);
 
         spriteRenderers[0].sprite = ringBigCatchedTop;
         spriteRenderers[1].sprite = ringBigCatchedBottom;
 
-        playerController.AddScore(500);
+        playerController.AddScore(GameManager.instance.scoreRing);
         playerController.ChangeRing(-1);
         if (colls.Length > 2)
         {
