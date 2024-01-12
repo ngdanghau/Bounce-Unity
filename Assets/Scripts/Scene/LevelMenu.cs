@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class LevelMenu : MonoBehaviour
 {
-    Button[] buttons;
+    GameObject[] buttons;
     [SerializeField] Sprite lselectLevelLocked;
     [SerializeField] Sprite lselectLevel;
 
@@ -16,16 +16,22 @@ public class LevelMenu : MonoBehaviour
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
         for (int i = 0; i < buttons.Length; i++)
         {
-            Image image = buttons[i].GetComponent<Image>();
+            Button button = buttons[i].GetComponent<Button>();
+            Image image = button.GetComponent<Image>();
             image.sprite = lselectLevelLocked;
             image.raycastTarget = false;
+
+            buttons[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 
         for (int i = 0; i < unlockedLevel; i++)
         {
-            Image image = buttons[i].GetComponent<Image>();
+            Button button = buttons[i].GetComponent<Button>();
+            Image image = button.GetComponent<Image>();
             image.sprite = lselectLevel;
             image.raycastTarget = true;
+
+            buttons[i].transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
@@ -37,10 +43,10 @@ public class LevelMenu : MonoBehaviour
 
     void ButtonsToArray() {
         int childCount = levelButtons.transform.childCount;
-        buttons = new Button[childCount];
+        buttons = new GameObject[childCount];
         for (int i = 0; i < childCount; i++)
         {
-            buttons[i] = levelButtons.transform.GetChild(i).gameObject.GetComponent<Button>();
+            buttons[i] = levelButtons.transform.GetChild(i).gameObject;
         }
     }
 }

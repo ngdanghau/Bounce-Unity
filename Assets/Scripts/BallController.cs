@@ -15,7 +15,6 @@ public class BallController : MonoBehaviour
     public BallState ballState = BallState.Small;
     private BallState ballStateSaved;
 
-
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI lifeText;
 
@@ -32,6 +31,7 @@ public class BallController : MonoBehaviour
     private void Awake()
     {
         totalNumRings = GameObject.FindGameObjectsWithTag("Ring").Length;
+        numRings = 0;
         anim = GetComponent<Animator>();
 
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
@@ -41,6 +41,18 @@ public class BallController : MonoBehaviour
         anim.SetBool("IsBigBall", ballState == BallState.Big);
 
         playerMovement = GetComponent<PlayerMovement>();
+
+        DrawRingImages();
+    }
+
+    private void DrawRingImages()
+    {
+        GameObject ringDefault = RingImages.transform.GetChild(0).gameObject;
+        for (int i = 0; i < totalNumRings - 1; i++)
+        {
+            GameObject ring = Instantiate(ringDefault);
+            ring.transform.SetParent(RingImages.transform);
+        }
     }
 
     public void EnlargeBall()
@@ -61,10 +73,6 @@ public class BallController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void Update()
-    {
-        SetText();
-    }
     public void UpdateCheckpoint(Vector2 pos)
     {
         checkpointPos = pos;
@@ -74,12 +82,16 @@ public class BallController : MonoBehaviour
     public void AddScore(int value)
     {
         score += value;
+
+        SetText();
     }
 
     public void ChangeLife(int value)
     {
         if (numLives > 4) return;
         numLives += value;
+
+        SetText();
     }
 
     void SetText()
@@ -106,16 +118,8 @@ public class BallController : MonoBehaviour
     public void ChangeRing(int value)
     {
         numRings += value;
-
-        //GameObject ring = new("GlobalRing");
-        //Image newImageComponent = RingImages.AddComponent<Image>();
-
-        //newImageComponent.sprite = GameManager.instance.gbarRing;
-        //newImageComponent.rectTransform.position = GameManager.instance.position;
-        //newImageComponent.rectTransform.sizeDelta = GameManager.instance.size;
-
-        //ring.transform.parent = RingImages.transform;
-
+        Transform c = RingImages.transform.GetChild(totalNumRings - numRings);
+        c?.gameObject.SetActive(false);
     }
 
     void StartGame()
@@ -143,6 +147,7 @@ public class BallController : MonoBehaviour
         if (numLives > 0)
         {
             numLives -= 1;
+            SetText();
             StartGame();
         }
         else

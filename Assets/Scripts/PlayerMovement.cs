@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         if (isJump && isGroundedFlag)
         {
             Debug.Log("isGrounded");
-            isGroundedFlag = false;
+             isGroundedFlag = false;
             rb.velocity = new Vector2(rb.velocity.x, jumpPower + jumpOffset);
         }
         

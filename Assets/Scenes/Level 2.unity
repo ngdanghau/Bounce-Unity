@@ -7963,6 +7963,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4411754559800170476, guid: b56dc8d47489dd446bd2ad3dca548c32, type: 3}
   m_PrefabInstance: {fileID: 1147312247314836741}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1147312247314836745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1690585862795761700, guid: b56dc8d47489dd446bd2ad3dca548c32, type: 3}
+  m_PrefabInstance: {fileID: 1147312247314836741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1468215991388970597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8076,6 +8081,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4398430661649664238, guid: 1722f67ee97090a4585821c7dcaa5e0c, type: 3}
+      propertyPath: RingImages
+      value: 
+      objectReference: {fileID: 1147312247314836745}
     - target: {fileID: 4398430661649664238, guid: 1722f67ee97090a4585821c7dcaa5e0c, type: 3}
       propertyPath: FailedPanel
       value: 

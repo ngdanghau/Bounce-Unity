@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,7 +34,7 @@ public class PortalController : MonoBehaviour
         playerController.AddScore(GameManager.instance.scorePortal);
         
 
-        nextMenu.GetComponentInChildren<TextMeshProUGUI>().text = "test";
+        nextMenu.GetComponentInChildren<TextMeshProUGUI>().text = SceneManager.GetActiveScene().name + " Complete";
         nextMenu.SetActive(true);
         UnlockNewLevel();
     }

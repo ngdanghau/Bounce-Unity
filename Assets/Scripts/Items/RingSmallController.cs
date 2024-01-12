@@ -28,7 +28,7 @@ public class RingSmallController : MonoBehaviour
         spriteRenderers[1].sprite = ringSmallCatchedBottom;
 
         playerController.AddScore(GameManager.instance.scoreRing);
-        playerController.ChangeRing(-1);
+        playerController.ChangeRing(1);
         if (colls.Length > 2)
         {
             colls[2].enabled = false;
