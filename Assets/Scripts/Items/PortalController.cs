@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -64,7 +63,7 @@ public class PortalController : MonoBehaviour
         {
             PlayerPrefs.SetInt("ReachedIndex", buidIndex);
 
-            int unlockedLevel = PlayerPrefs.GetInt("unlockedLevel", 1);
+            int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
             PlayerPrefs.SetInt("UnlockedLevel", unlockedLevel + 1);
             PlayerPrefs.Save();
         }
